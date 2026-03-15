@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="password-overlay" class="password-overlay">
+        <div class="password-box">
+            <h2>Enter Password</h2>
+            <input type="password" id="password-input" placeholder="Password">
+            <button onclick="checkPassword()">Enter</button>
+            <p id="error-message" style="color: red; display: none;">Incorrect password. Try again.</p>
+        </div>
+    </div>
+
+    <div id="success-popup" class="popup">
+        <div class="popup-inner">
+            <div class="popup-message"></div>
+        </div>
+    </div>
+
+    <div id="main-content" style="display: none;">
+        <div id="hearts-container"></div>
+
+        <!-- Hidden trackers -->
+        <div id="tracker1" class="hidden-tracker" onclick="trackerClick(1)"></div>
+        <div id="tracker2" class="hidden-tracker" onclick="trackerClick(2)"></div>
+
+        <section id="hero">
+            <div class="hero-content">
+                <h1 class="typewriter">Happy Birthday, Chicky. <span class="heart">❤️</span></h1>
+                <p class="fade-in delay-1">Today is all about you, and the light you bring to my life.</p>
+                <button class="fade-in delay-2" onclick="startCelebration()">Start the Celebration</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
