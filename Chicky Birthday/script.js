@@ -1,4 +1,4 @@
-// Password Check
+// Password Check System
 let passwordTries = 0;
 
 function showPopup(message) {
@@ -6,26 +6,38 @@ function showPopup(message) {
     if (!popup) return;
     popup.querySelector('.popup-message').innerText = message;
     popup.classList.add('visible');
-    setTimeout(() => popup.classList.remove('visible'), 3200);
+    setTimeout(() => popup.classList.remove('visible'), 4000);
 }
 
 function checkPassword() {
-    const password = document.getElementById('password-input').value;
+    const password = document.getElementById('password-input').value.trim();
     passwordTries++;
-    if (password === 'Chicky') {
-        document.getElementById('password-overlay').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
-        createHearts();
-        setupScrollAnimations();
+    
+    // Accept variations of Chicky (case insensitive)
+    if (password.toLowerCase() === 'chicky') {
+        document.getElementById('password-overlay').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('password-overlay').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            createRomanticElements();
+            setupScrollAnimations();
+        }, 500); // fade out effect duration
 
-        // Internal tracking (developer-only)
-        console.log('Site accessed successfully after', passwordTries, 'tries');
-
-        // User-facing celebration note
-        showPopup('Welcome, my love! 🥰 Enjoy the celebration.');
+        showPopup('Welcome to your special place, my love. 🌹');
     } else {
-        document.getElementById('error-message').style.display = 'block';
-        console.log('Failed password attempt #' + passwordTries);
+        const errorMsg = document.getElementById('error-message');
+        errorMsg.style.display = 'block';
+        
+        // Playful error messages depending on tries
+        if (passwordTries === 2) errorMsg.innerText = "Come on beautiful, you know this...";
+        if (passwordTries >= 3) errorMsg.innerText = "Hint: The cutest nickname ever. Begins with C.";
+        
+        // Shake animation for wrong password
+        const box = document.querySelector('.password-box');
+        box.style.transform = "translateX(-10px)";
+        setTimeout(() => box.style.transform = "translateX(10px)", 100);
+        setTimeout(() => box.style.transform = "translateX(-10px)", 200);
+        setTimeout(() => box.style.transform = "translateX(0)", 300);
     }
 }
 
@@ -42,49 +54,49 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Start Celebration
+// Start Celebration (Transition)
 function startCelebration() {
-    window.location.href = 'memories.html';
+    // Elegant fade out before navigating
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 1s ease';
+    setTimeout(() => {
+        window.location.href = 'memories.html';
+    }, 1000);
 }
 
-// Tracker clicks
+// Playful Hidden Trackers
 function trackerClick(id) {
-    console.log('Hidden tracker ' + id + ' clicked!');
-
-    // Display clean in-app popup instead of browser alert
     if (id === 1) {
-        showPopup('🎁 Surprise! You found a hidden gift: A virtual hug! 🤗');
+        showPopup("✨ You found a secret! I'm thinking about you right now.");
     } else if (id === 2) {
-        showPopup("🎁 Hidden gift: You're amazing! Keep exploring! 🌟");
-    } else if (id === 3) {
-        showPopup('🎁 Secret message: I love you more than words can say! 💕');
-    } else if (id === 4) {
-        showPopup("🎁 Found it! Here's a digital kiss: 😘");
+        showPopup("💖 Another secret! Here's a million virtual kisses! 😘");
     }
 }
 
-// Generate Floating Hearts
-function createHearts() {
+// Generate Beautiful Floating Romantic Elements
+function createRomanticElements() {
     const container = document.getElementById('hearts-container');
-    if (!container) return; // In case it's not on the page
-    const heartSymbols = ['❤️', '💖', '💕', '✨'];
+    if (!container) return; 
     
-    for (let i = 0; i < 10; i++) {  // Reduced from 20 to 10 for better performance
-        const heart = document.createElement('div');
-        heart.classList.add('floating-heart');
-        heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+    // Mix of hearts, sparkles, and petals
+    const symbols = ['❤️', '💖', '✨', '🌸', '💕', '🤍'];
+    
+    for (let i = 0; i < 15; i++) {
+        const el = document.createElement('div');
+        el.classList.add('floating-element');
+        el.innerText = symbols[Math.floor(Math.random() * symbols.length)];
         
         // Randomize positioning and animation
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (Math.random() * 10 + 5) + 's';
-        heart.style.animationDelay = Math.random() * 5 + 's';
-        heart.style.fontSize = (Math.random() * 1.5 + 0.5) + 'rem';
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.animationDuration = (Math.random() * 12 + 8) + 's'; // Slower, dreamier
+        el.style.animationDelay = Math.random() * 5 + 's';
+        el.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
         
-        container.appendChild(heart);
+        container.appendChild(el);
     }
 }
 
-// Intersection Observer for scroll animations
+// Intersection Observer for Scroll Animations
 function setupScrollAnimations() {
     const elements = document.querySelectorAll('.fade-up');
     
@@ -92,20 +104,27 @@ function setupScrollAnimations() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                // Optional: stop observing once animated to keep them visible
+                observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.15 }); // Trigger slightly later for better effect
 
     elements.forEach(el => observer.observe(el));
 }
 
-// Initialize
+// Initialization on load
 window.onload = () => {
-    // Create hearts if container exists
+    // Smooth page load fade-in
+    document.body.style.opacity = '0';
+    setTimeout(() => {
+        document.body.style.transition = 'opacity 1s ease';
+        document.body.style.opacity = '1';
+    }, 100);
+
     if (document.getElementById('hearts-container')) {
-        createHearts();
+        createRomanticElements();
     }
-    // Setup scroll animations if there are elements to animate
     if (document.querySelectorAll('.fade-up').length > 0) {
         setupScrollAnimations();
     }
